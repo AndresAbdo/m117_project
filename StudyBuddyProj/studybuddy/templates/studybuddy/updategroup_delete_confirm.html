@@ -1,0 +1,15 @@
+{% extends "studybuddy/base_generic.html" %}
+
+{% block content %}
+ 
+  <div class="content-after-login">    
+    <div class="container">
+  <form action="" method="post">
+    {% csrf_token %}
+    <p> Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Yes Delete!" />
+    <a href="{% url 'index' %}"> No </a>
+  </form>
+</div>
+</div>
+{% endblock %}

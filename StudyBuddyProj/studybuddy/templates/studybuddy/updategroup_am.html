@@ -1,0 +1,22 @@
+{% extends "studybuddy/base_generic.html" %}
+
+{% block content %}
+  <div class="content-after-login">    
+    <div class="container">
+      <h2>Update this Group</h2>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+          </p>
+        {% endfor %}
+        <button type="submit">Update Group</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
