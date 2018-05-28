@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -30,11 +31,11 @@ class MyModelName(models.Model):
 """	
 
 
-class Student(models.Model):
+class Student(models.Model):	
 
 	# Fields:
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+    
     # Metadata
     """
     class Meta: 
@@ -74,15 +75,20 @@ class StudyGroup(models.Model):
         return self.name
 
 
+class StudyGroupForm(ModelForm):
+	class Meta:
+		model = StudyGroup
+		fields = '__all__'
+		# exclude = ()
 
 
 class ChatMessage(models.Model):
-	sender = models.OneToOneField(Student, on_delete=models.DO_NOTHING)
-	group = models.OneToOneField(StudyGroup, on_delete=models.CASCADE)
+	sender = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
+	group = models.ForeignKey(StudyGroup, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(auto_now_add=True)
 	message = models.TextField(max_length=2000)    
 
 	def __str__(self):        
 	    # String for representing the MyModelName object (in Admin site etc.)        
-	    return self.group
+	    return self.message
 
