@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import include
+from django.conf.urls import include, url
 from django.views.generic import RedirectView
+from django.contrib.auth import views as auth_views
+from studybuddy import views as sb_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +28,9 @@ urlpatterns = [
 
     # Redirect root URL to URL 127.0.0.1:8000/sb/
     path('', RedirectView.as_view(url='/sb/')),
+
+
+	path('login/', auth_views.login, name='login'),
+	path('logout/', auth_views.logout, {'next_page':'login'}, name='logout'),
+	path('signup/', sb_views.signup, name='signup'), 
 ]
