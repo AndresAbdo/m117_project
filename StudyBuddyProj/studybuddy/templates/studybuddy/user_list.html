@@ -1,0 +1,19 @@
+{% extends "studybuddy/base_generic.html" %}
+
+{% block content %}
+	<div class="content-after-login">    
+
+		<main role="main" class="container">
+
+			<form method="get">
+				{{ filter.form.as_p }}
+				<button type="submit">Search</button>
+			</form>
+			<ul>
+				{% for group in filter.qs %}
+				<li>{{ group.name }} - {{ group.firstname }}</li>
+				{% endfor %}
+			</ul>
+		</main>
+	</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "studybuddy/base_generic.html" %}
+
+{% block content %}
+	<div class="content-after-login">    
+		<div class="container">
+		 	<h2>{{studygroup.name}}</h2>
+	 		<h4 class="studygroup-course">{{studygroup.course}}</h4>
+			<p class="studygroup-decsription">Description: {{studygroup.description}}</p>
+			<p class="studygroup-days">
+			Meeting Days: {{studygroup.meeting_days}}</p>
+			<p class="studygroup-time">Meeting Time: {{studygroup.meeting_time}}</p>
+			<p class="studygroup-location">Meeting Locations: {{studygroup.meeting_location}}</p>
+			<p> <a href="{% url 'updategroup_am' studygroup.id %}"> Update </a>	</p>
+			<p> <a href="{% url 'updategroup_delete' studygroup.id %}">  Delete Group </a></p>
+		</div>	
+	</div>	
+{% endblock %}

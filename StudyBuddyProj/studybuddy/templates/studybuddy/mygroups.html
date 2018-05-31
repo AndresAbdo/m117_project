@@ -4,17 +4,8 @@
 	<div class="content-after-login">    
 
 		<main role="main" class="container">
-			<div class="searcharea">
-				<h3>Filter StudyGroups</h3>
-				<form method="get">
-				{{ filter.form.as_p }}
-				<button type="submit">Search</button>
-				</form>
-				<hr/>
-				 
-			</div>
 
-			{% for studygroup in filter.qs %}
+			{% for studygroup in studygroups %}
 			<div class="studygroup">
 				<h3 class="studygroup-name" >
 					<a href="{% url 'group' studygroup.id %}">
@@ -24,7 +15,7 @@
 				<h4 class="studygroup-course">{{studygroup.course}}</h4>
 				<p class="studygroup-decsription">Description: {{studygroup.description}}</p>
 				<p class="studygroup-days">
-				Meeting Days: {{ studygroup.meeting_days }}</p>
+				Meeting Days: {{studygroup.meeting_days}}</p>
 				<p class="studygroup-time">Meeting Time: {{studygroup.meeting_time}}</p>
 		        <hr>
 		    {% endfor %}
