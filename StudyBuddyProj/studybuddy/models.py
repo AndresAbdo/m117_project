@@ -89,7 +89,7 @@ class StudyGroup(models.Model):
     name = models.CharField(max_length=100)
     course = models.CharField(max_length=100)
     description = models.TextField(max_length=1000, default="")
-    members = models.ManyToManyField(Student , help_text="Select the Students that are a part of this StudyGroup")
+    members = models.ManyToManyField(User , help_text="Select the Students that are a part of this StudyGroup")
     meeting_days = models.CharField(max_length=9, default='Monday', choices=DAY_OF_THE_WEEK_2)
     meeting_time = models.TimeField(default=datetime.time(16, 00))
     meeting_location = models.CharField(max_length=100, default="")

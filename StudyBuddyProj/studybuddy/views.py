@@ -109,7 +109,7 @@ def mygroups(request):
     View function for home page of site.
     """
     # Generate counts of some of the main objects
-    student = Student.objects.get(pk=request.user.id)
+    student = User.objects.get(pk=request.user.id)
     studygroups_list = StudyGroup.objects.all().filter(members=student)
     paginator = Paginator(studygroups_list, 20)
 
