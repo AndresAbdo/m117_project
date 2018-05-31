@@ -7,9 +7,21 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.http import HttpResponseRedirect
+from .filters import UserFilter
+import django_filters
 
 
 # Create your views here.
+
+
+
+
+class GroupFilters(django_filters.FilterSet):
+    name = django_filters.CharFilter(lookup_expr='icontains')
+    course = django_filters.CharFilter(lookup_expr='icontains')
+    class Meta:
+        model = StudyGroup
+        fields = ['name', 'course' ]
 
 # This page will display ALL the groups and serve as a notice board of some sorts
 @login_required(login_url='/login/')
@@ -23,13 +35,16 @@ def index(request):
 
     page = request.GET.get('page');
     studygroups = paginator.get_page(page)
+
+    user_list = StudyGroup.objects.all()
+    user_filter = GroupFilters(request.GET, queryset=user_list)
     
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
         'studybuddy/index.html',
-        context={'studygroups':studygroups},   
-)
+        context={'studygroups':studygroups, 'filter': user_filter},   
+	)
 
 
 class StudentSignUpForm(UserCreationForm):
@@ -87,6 +102,36 @@ def updategroup_delete(request, pk, template_name='studybuddy/updategroup_delete
 		instance.delete()
 		return HttpResponseRedirect('/')
 	return render(request, template_name, {'object': instance})
+
+@login_required(login_url='/login/')
+def mygroups(request):
+    """
+    View function for home page of site.
+    """
+    # Generate counts of some of the main objects
+    student = Student.objects.get(pk=request.user.id)
+    studygroups_list = StudyGroup.objects.all().filter(members=student)
+    paginator = Paginator(studygroups_list, 20)
+
+    page = request.GET.get('page');
+    studygroups = paginator.get_page(page)
+    
+    # Render the HTML template index.html with the data in the context variable
+    return render(
+        request,
+        'studybuddy/mygroups.html',
+        context={'studygroups':studygroups},   
+	)
+
+
+@login_required(login_url='/login/')
+def group(request, pk):
+	studygroup = StudyGroup.objects.get(pk=pk)
+	return render(
+        request,
+        'studybuddy/group.html',
+        context={'studygroup':studygroup},   
+	)
 
 
 
