@@ -1,6 +1,4 @@
-# m117_project
-
-How to run the code:
+# How to run StudyBuddy
 
 To see a fully deployed version, visit http://andresabdo.pythonanywhere.com
 
